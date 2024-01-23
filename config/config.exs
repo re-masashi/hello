@@ -13,7 +13,7 @@ config :hello,
 
 # Configures the endpoint
 config :hello, HelloWeb.Endpoint,
-  url: [host: System.get_env("APP_NAME") <> ".gigalixirapp.com", port: 443],
+  url: [host: "localhost"],
   adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
     formats: [html: HelloWeb.ErrorHTML, json: HelloWeb.ErrorJSON],
