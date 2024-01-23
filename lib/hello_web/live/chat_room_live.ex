@@ -333,10 +333,10 @@ defmodule HelloWeb.ChatRoomLive do
       msg_= Repo.insert(
         %Message{text: msg, user: socket.assigns.current_user, room_id: socket.assigns.room_struct.id}
       )
-      for user <- socket.assigns.room_struct.users do
-        unr = Map.put(user.unreads, socket.assigns.room, %{"count"=>user.unreads.count+1, "last"=>msg})
-        Repo.update(change(user, %{unreads: unr}))
-      end
+      # for user <- socket.assigns.room_struct.users do
+      #   unr = Map.put(user.unreads, socket.assigns.room, %{"count"=>user.unreads.count+1, "last"=>msg})
+      #   Repo.update(change(user, %{unreads: unr}))
+      # end
       notify(msg_, :message_incoming, socket.assigns.room)
       {:noreply, socket}
     end

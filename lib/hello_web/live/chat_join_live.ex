@@ -115,10 +115,10 @@ defmodule HelloWeb.ChatJoinLive do
         u = Repo.get(Hello.Accounts.User, socket.assigns.current_user.id)
           |>Repo.preload([:rooms])
 
-        Repo.update(change(room)|>put_assoc(:users, [u]))
-        Repo.update(change(u)|>put_assoc(:rooms, [room]))
+        # Repo.update(change(room)|>put_assoc(:users, [u]))
+        # Repo.update(change(u)|>put_assoc(:rooms, [room]))
         
-        Repo.update(change(u, %{unreads: Map.put(u.unreads, room.name, %{"count"=>0, "last"=>""})}))
+        # Repo.update(change(u, %{unreads: Map.put(u.unreads, room.name, %{"count"=>0, "last"=>""})}))
         {
           :noreply,
           socket
