@@ -20,7 +20,8 @@ config :hello, HelloWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Hello.PubSub,
-  live_view: [signing_salt: "Zp+OTGLq"]
+  live_view: [signing_salt: "Zp+OTGLq"],
+  check_origin: ["https://sanman.gigalixirapp.com"]
 
 # Configures the mailer
 #
