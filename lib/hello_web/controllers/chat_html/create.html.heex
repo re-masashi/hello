@@ -1,0 +1,77 @@
+<main
+  class="bg-gray-800 max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl hover:bg-gray-900 transition"
+>
+  <section>
+    <h3 class="font-bold text-2xl text-white">Create a Room</h3>
+    <p class="text-gray-300 pt-2">Start Your Journey</p>
+  </section>
+
+  <section class="mt-10">
+<%!--     <form class="flex flex-col" method="POST" action="#">
+      <div class="mb-6 pt-3 rounded bg-gray-500">
+        <label
+          class="block text-gray-200 text-sm font-bold mb-2 ml-3"
+          for="name"
+          >Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="bg-gray-500 rounded w-full text-gray-700 focus:outline-none border-none px-3 pb-3"
+        />
+      </div>
+      <div class="mb-6 pt-3 rounded bg-gray-500">
+        <label
+          class="block text-gray-200 text-sm font-bold mb-2 ml-3"
+          for="name"
+          >Room</label>
+        <input
+          type="text"
+          id="room"
+          name="room"
+          class="bg-gray-500 rounded w-full text-gray-700 focus:outline-none border-none px-3 pb-3"
+        />
+      </div>
+      <div class="mb-6 pt-3 rounded bg-gray-500">
+        <label
+          class="block text-gray-200 text-sm font-bold mb-2 ml-3"
+          for="password"
+          >Password</label>
+        <input
+          type="password"
+          id="pass"
+          name="pass"
+          class="bg-gray-500 rounded w-full text-gray-700 focus:outline-none border-none px-3 pb-3"
+        />
+      </div>
+       <%# <input type="hidden" name="_csrf_token" value=csrf/> %>
+      <button
+        class="bg-fuchsia-800 hover:bg-fuchsia-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
+        type="submit"
+      >
+        Create
+      </button>
+    </form> --%>
+    <.form for={@form} phx-change="validate" phx-submit="save" class="flex flex-col">
+      <label
+        class="block text-gray-200 text-sm font-bold mb-2 ml-3"
+        for="name"
+        >Name</label>
+      <.input type="text" field={@form[:name]}
+        class="bg-gray-500 rounded w-full text-gray-700 focus:outline-none border-none px-3 pb-3"/>
+      <label
+        class="block text-gray-200 text-sm font-bold mb-2 ml-3"
+        for="name"
+        >Room</label>
+      <.input type="text" field={@form[:room]}
+      class="bg-gray-500 rounded w-full text-gray-700 focus:outline-none border-none px-3 pb-3"/>
+      <label
+        class="block text-gray-200 text-sm font-bold mb-2 ml-3"
+        for="name"
+        >Password</label>
+      <.input type="email" field={@form[:email]}
+       class="bg-gray-500 rounded w-full text-gray-700 focus:outline-none border-none px-3 pb-3"/>
+      <button>Submit</button>
+    </.form>
+  </section>
+</main>

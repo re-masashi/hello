@@ -1,0 +1,26 @@
+Metadata-Version: 2.1
+Name: gigalixir
+Version: 1.10.0
+Home-page: https://github.com/gigalixir/gigalixir-cli
+Author: Tim Knight
+Author-email: tim@gigalixir.com
+License-File: LICENSE
+Requires-Dist: click >=8.1
+Requires-Dist: cryptography >=38.0
+Requires-Dist: pygments >=2.13
+Requires-Dist: pyOpenSSL >=22.1
+Requires-Dist: qrcode >=7.3
+Requires-Dist: requests >=2.28
+Requires-Dist: rollbar >=0.16
+Requires-Dist: setuptools >=69.0
+Requires-Dist: six >=1.16
+Requires-Dist: stripe >=4.1
+Provides-Extra: dev
+Requires-Dist: Sphinx ; extra == 'dev'
+Requires-Dist: sphinx-rtd-theme ; extra == 'dev'
+Requires-Dist: sphinx-tabs ; extra == 'dev'
+Provides-Extra: test
+Requires-Dist: pytest ; extra == 'test'
+Requires-Dist: HTTPretty ; extra == 'test'
+Requires-Dist: sure ; extra == 'test'
+
