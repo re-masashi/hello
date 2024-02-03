@@ -51,7 +51,18 @@ defmodule Hello.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:html_sanitize_ex, "~> 1.4"},      
+      # # rtc engine dependencies
+      # {:membrane_rtc_engine,
+      #  github: "jellyfish-dev/membrane_rtc_engine",
+      #  sparse: "engine",
+      #  ref: "91499e6958c9243f535d9e7486ae46915f492372",
+      #  override: true},
+      # {:membrane_rtc_engine_webrtc,
+      #  github: "jellyfish-dev/membrane_rtc_engine",
+      #  sparse: "webrtc",
+      #  ref: "91499e6958c9243f535d9e7486ae46915f492372"}
     ]
   end
 

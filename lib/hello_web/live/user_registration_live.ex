@@ -11,8 +11,11 @@ defmodule HelloWeb.UserRegistrationLive do
         Register for an account
         <:subtitle>
           Already registered?
-          <.link navigate={~p"/users/log_in"} class="font-semibold animate-glotext 
-              bg-gradient-to-r from-orange-500 via-purple-500 to-teal-500 bg-clip-text text-transparent">
+          <.link
+            navigate={~p"/users/log_in"}
+            class="font-semibold animate-glotext 
+              bg-gradient-to-r from-orange-500 via-purple-500 to-teal-500 bg-clip-text text-transparent"
+          >
             Sign in
           </.link>
           to your account now.

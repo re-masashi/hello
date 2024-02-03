@@ -6,6 +6,7 @@ defmodule Hello.Repo.Migrations.CreateRooms do
       add :name, :string, null: false
       add :pass, :string
       add :messages, references(:messages, on_delete: :nothing)
+      add :notes, references(:notes, on_delete: :nothing)
 
       timestamps(type: :utc_datetime)
     end

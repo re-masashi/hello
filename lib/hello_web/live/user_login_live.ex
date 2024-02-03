@@ -8,8 +8,11 @@ defmodule HelloWeb.UserLoginLive do
         Sign in to account
         <:subtitle>
           Don't have an account?
-          <.link navigate={~p"/users/register"} class="font-semibold animate-glotext 
-              bg-gradient-to-r from-orange-500 via-purple-500 to-teal-500 bg-clip-text text-transparent">
+          <.link
+            navigate={~p"/users/register"}
+            class="font-semibold animate-glotext 
+              bg-gradient-to-r from-orange-500 via-purple-500 to-teal-500 bg-clip-text text-transparent"
+          >
             Sign up
           </.link>
           for an account now.

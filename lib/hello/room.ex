@@ -7,7 +7,7 @@ defmodule Hello.Room do
     field :pass, :string, redact: true
     has_many :messages, Hello.Message
     many_to_many :users, Hello.Accounts.User, join_through: "users_rooms"
-
+    #has_many :notes, Hello.Note
 
     timestamps(type: :utc_datetime)
   end

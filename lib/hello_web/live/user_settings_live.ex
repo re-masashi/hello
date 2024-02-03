@@ -15,21 +15,38 @@ defmodule HelloWeb.UserSettingsLive do
     <div class="space-y-12 lg:px-32 px-2">
       <div class="lg:px-32 pt-2">
         <div class="flex justify-center ">
-          <img src={@current_user.pfp||"https://placehold.co/600x600"} class="rounded-full h-40 w-40"/>
+          <img
+            src={@current_user.pfp || "https://placehold.co/600x600"}
+            class="rounded-full h-40 w-40"
+          />
         </div>
-        <form id="upload-pfp" phx-change="validate" phx-submit="save" class="text-white flex flex-col justify-center p-4" >
+        <form
+          id="upload-pfp"
+          phx-change="validate"
+          phx-submit="save"
+          class="text-white flex flex-col justify-center p-4"
+        >
           <div class="flex items-center justify-center p-4">
-              <label class="w-42 flex flex-col items-center px-6 py-6 bg-zinc-900 text-white rounded-lg shadow-lg tracking-wide uppercase cursor-pointer hover:text-white">
-                  <span class="mt-2 text-base leading-normal font-black">
-                    Select a file
-                  </span>
-                  <span class="normal-case"><%= if @pfp_filename != "" do %>File: <%=@pfp_filename%> <%end%></span>
+            <label class="w-42 flex flex-col items-center px-6 py-6 bg-zinc-900 text-white rounded-lg shadow-lg tracking-wide uppercase cursor-pointer hover:text-white">
+              <span class="mt-2 text-base leading-normal font-black">
+                Select a file
+              </span>
+              <span class="normal-case">
+                <%= if @pfp_filename != "" do %>
+                  File: <%= @pfp_filename %>
+                <% end %>
+              </span>
 
-                  <.live_file_input upload={@uploads.pfp} 
-                    required hidden/>
-              </label>
+              <.live_file_input upload={@uploads.pfp} required hidden />
+            </label>
           </div>
-          <button type="submit" class="p-2 bg-purple-900 rounded-full">Upload</button>
+          <button
+            type="submit"
+            class="p-2 bg-purple-900 rounded-full lg:mx-20 sm:mx-2 md:mx-20"
+            phx-disable-with="Uploading..."
+          >
+            Upload
+          </button>
         </form>
       </div>
       <div class=" lg:px-32">
@@ -51,8 +68,7 @@ defmodule HelloWeb.UserSettingsLive do
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing... " 
-              class="rounded">Change Email</.button>
+            <.button phx-disable-with="Changing... " class="rounded">Change Email</.button>
           </:actions>
         </.simple_form>
       </div>
@@ -88,9 +104,9 @@ defmodule HelloWeb.UserSettingsLive do
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing..."
-            class="rounded">
-            Change Password</.button>
+            <.button phx-disable-with="Changing..." class="rounded">
+              Change Password
+            </.button>
           </:actions>
         </.simple_form>
       </div>
@@ -128,7 +144,6 @@ defmodule HelloWeb.UserSettingsLive do
       |> allow_upload(:pfp, accept: ~w(.jpg .jpeg .png), max_entries: 1)
       |> assign(:pfp_filename, "")
       |> assign(:trigger_submit, false)
-      
 
     {:ok, socket}
   end
@@ -196,9 +211,9 @@ defmodule HelloWeb.UserSettingsLive do
   end
 
   def handle_event("validate", _params, socket) do
-    entry = socket.assigns.uploads.pfp.entries|>List.first()
+    entry = socket.assigns.uploads.pfp.entries |> List.first()
     socket = assign(socket, pfp_filename: entry.client_name)
-    IO.inspect socket.assigns.pfp_filename
+    IO.inspect(socket.assigns.pfp_filename)
     {:noreply, socket}
   end
 
@@ -206,40 +221,47 @@ defmodule HelloWeb.UserSettingsLive do
     uploaded_files =
       consume_uploaded_entries(socket, :pfp, fn %{path: path}, entry ->
         dest = Path.join([:code.priv_dir(:hello), "static", "uploads", Path.basename(path)])
-        IO.inspect entry.client_name
+        IO.inspect(entry.client_name)
 
         # The `static/uploads` directory must exist for `File.cp!/2`
         # and MyAppWeb.static_paths/0 should contain uploads to work,.
         File.cp!(
-          path, 
-          dest#<>(socket.assigns.pfp|>String.split('.')|>List.last())
+          path,
+          # <>(socket.assigns.pfp|>String.split('.')|>List.last())
+          dest
         )
+
         {:ok, "/uploads/" <> Path.basename(dest)}
       end)
-    route= List.first(uploaded_files)
-    #User |> update(set: [name: "new name"]) |> where(id: socket.assigns.current_user.id)
+
+    route = List.first(uploaded_files)
+    # User |> update(set: [name: "new name"]) |> where(id: socket.assigns.current_user.id)
     u = Hello.Repo.get(Hello.Accounts.User, socket.assigns.current_user.id)
     Hello.Repo.update(change(u, %{pfp: route}))
-    {:noreply, socket|>put_flash(:info, "PFP updated successfully!!")|>push_navigate(to: ~p"/users/settings")}
+
+    {:noreply,
+     socket
+     |> put_flash(:info, "PFP updated successfully!!")
+     |> push_navigate(to: ~p"/users/settings")}
   end
+
   # def handle_progress(:pfp, entry, socket) do
   #   {if entry.done? do
   #         File.mkdir_p!(@uploads_dir)
-    
+
   #         [{dest, _paths}] =
   #           consume_uploaded_entries(socket, :pfp, fn %{path: path}, _entry ->
   #             {:ok, [{:zip_comment, []}, {:zip_file, first, _, _, _, _} | _]} =
   #               :zip.list_dir(~c"#{path}")
-    
+
   #             dest_path = Path.join(@uploads_dir, Path.basename(to_string(first)))
   #             {:ok, paths} = :zip.unzip(~c"#{path}", cwd: ~c"#{@uploads_dir}")
   #             {:ok, {dest_path, paths}}
   #           end)
-    
+
   #         {:noreply, assign(socket, status: "\"#{Path.basename(dest)}\" uploaded!")}
   #       else
   #         {:noreply, assign(socket, status: "uploading...")}
   #       end}
   # end
-
 end

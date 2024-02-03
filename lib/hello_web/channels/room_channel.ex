@@ -1,8 +1,8 @@
-defmodule HelloWeb.RoomChannel do
+defmodule HelloWeb.HeartBeatChannel do
   use HelloWeb, :channel
 
   @impl true
-  def join("room:home", payload, socket) do
+  def join("user:heartbeat", payload, socket) do
     if authorized?(payload) do
       {:ok, socket}
     else
@@ -28,5 +28,9 @@ defmodule HelloWeb.RoomChannel do
   # Add authorization logic here as required.
   defp authorized?(_payload) do
     true
+  end
+
+  def terminate({:shutdown, _}, socket) do
+    
   end
 end

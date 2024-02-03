@@ -17,14 +17,14 @@ import Ecto.Changeset
 lobby = Repo.insert!(%Room{name: "lobby", pass: ""})
 hehe = Repo.insert!(%Room{name: "hehe", pass: ""})
 
-{:ok,a} = Accounts.register_user(%{
+{:ok, a} = Accounts.register_user(%{
 	name: "IDK", 
 	username: "EHE", 
 	password: "aaaaaaaaaaaa", 
-	email: "aa@aa", 
+	email: "aa@aa",
 })
 
-{:ok,a} = Accounts.register_user(%{
+{:ok, a} = Accounts.register_user(%{
 	name: "IDK2", 
 	username: "HEHE2", 
 	password: "aaaaaaaaaaaa", 
@@ -40,4 +40,29 @@ Repo.update(change(a, %{unreads: unr}))
 Repo.insert!(%Message{user_id: a.id, text: "1L", room_id: lobby.id})
 Repo.insert!(%Message{user_id: a.id, text: "1H", room_id: hehe.id})
 
-IO.inspect Repo.get(Accounts.User, 1)
+u = Repo.get(Accounts.User, 1)
+  |>Repo.preload([:rooms])
+
+u1 = Repo.get(Accounts.User, 2)
+  |>Repo.preload([:rooms])
+
+
+room = Repo.get(Room, 2)|>Repo.preload([:users])
+
+user_to_room_add = fn (u, room) ->(
+	Repo.update(
+		change(room)
+		|>put_assoc(:users, [u])
+	)
+	Repo.update(change(u, %{unreads: Map.put(u.unreads, room.name, %{"count"=>0, "last"=>""})}))
+)
+end
+
+user_to_room_add.(u, room)
+user_to_room_add.(u1, room)
+
+IO.inspect (Repo.get(Room, 2)|>Repo.preload([:users]))
+IO.inspect (Repo.get(Accounts.User, 2)|>Repo.preload([:rooms]))
+IO.inspect (Repo.get(Accounts.User, 1)|>Repo.preload([:rooms]))
+
+

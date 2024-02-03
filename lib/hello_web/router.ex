@@ -21,20 +21,46 @@ defmodule HelloWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/token", TokenController, :index
+
   end
 
-  scope "/chat", HelloWeb do
-    pipe_through [:browser, :require_authenticated_user]
+  # scope "/chat", HelloWeb do
+  #   pipe_through [:browser, :require_authenticated_user]
 
-    live_session :authenticated, on_mount: [{HelloWeb.UserAuth, :ensure_authenticated}] do
+  #   live_session :authenticated, on_mount: [{HelloWeb.UserAuth, :ensure_authenticated}] do
+  #     live "/", ChatJoinLive
+  #     live "/create", ChatCreateLive
+  #     live "/join", ChatJoinLive
+  #     live "/:room", ChatRoomLive
+  #     live "/vid-con/:room", ChatVideoLive
+  #   end
+  # end
+
+
+  live_session :authenticated, on_mount: [{HelloWeb.UserAuth, :ensure_authenticated}] do
+
+    scope "/listen", HelloWeb do
+      pipe_through [:browser, :require_authenticated_user]
+
+      live "/search", ChatJoinLive
+      live "/song/:id", ChatJoinLive
+      live "/album/:id", ChatJoinLive
+      live "/playlist/:id", ChatJoinLive
+      live "/favourites", ChatJoinLive
+      live "/history", ChatJoinLive
+    end
+
+    scope "/chat", HelloWeb do
+      pipe_through [:browser, :require_authenticated_user]
+
       live "/", ChatJoinLive
       live "/create", ChatCreateLive
       live "/join", ChatJoinLive
       live "/:room", ChatRoomLive
-    end  
-    # get "/", ChatController, :index
-    # post "/", ChatController, :join
-    get "/create", ChatController, :create
+      live "/vid-con/:room", ChatVideoLive
+      live "/notes/:room", ChatNotesLive
+    end
   end
 
   # Other scopes may use custom stacks.

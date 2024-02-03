@@ -7,6 +7,6 @@ defmodule Hello.Repo.Migrations.CreateUsersRooms do
       add :user_id, references(:users)
     end
 
-    create unique_index(:users_rooms, [:room_id, :user_id])
+    create index(:users_rooms, [:room_id, :user_id])
   end
 end

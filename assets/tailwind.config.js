@@ -18,6 +18,8 @@ module.exports = {
       },
       animation: {
         glotext: 'glotext 5s ease infinite',
+        'flyin-l': 'flyin-l 0.3s ease',
+        'flyin-r': 'flyin-r 0.3s ease',
       },
       keyframes: {
         glotext: {
@@ -30,11 +32,28 @@ module.exports = {
             'background-position': 'right center',
           },
         },
+        'flyin-l': {
+          '0%': {
+            transform: 'translateX(-20%)',
+          },
+          '100%':{
+            transform: 'translateX(0%)',  
+          }
+        },
+        'flyin-r': {
+          '0%': {
+            transform: 'translateX(20%)',
+          },
+          '100%':{
+            transform: 'translateX(0%)',   
+          }
+        }
       },
     },
   },
   plugins: [
     require("@tailwindcss/forms"),
+    require('@tailwindcss/typography'),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //

@@ -13,7 +13,7 @@ defmodule Hello.Message do
   @doc false
   def changeset(message, attrs) do
     message
-    |> cast(attrs, [:text, :time, :sender, :room])
-    |> validate_required([:text, :time, :sender, :room])
+    |> cast(attrs, [:text, :user, :room])
+    |> validate_required([:text, :user, :room])
   end
 end

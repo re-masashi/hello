@@ -1,4 +1,4 @@
-defmodule HelloWeb.UserSocket do
+defmodule HelloWeb.HeartBeatSocket do
   use Phoenix.Socket
 
   # A Socket handler
@@ -8,7 +8,7 @@ defmodule HelloWeb.UserSocket do
 
   ## Channels
 
-  channel "room:home", HelloWeb.RoomChannel
+  channel "user:heartbeat", HelloWeb.HeartBeatChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -25,8 +25,14 @@ defmodule HelloWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   @impl true
-  def connect(_params, socket, _connect_info) do
-    {:ok, socket}
+  def connect(%{"token" => token}, socket, _connect_info) do
+    case Phoenix.Token.verify(HelloWeb.Endpoint, "heartbeat auth", token) do
+      {:ok, user_id} ->
+        socket = assign(socket, :user, Hello.Repo.get_by!(Hello.Accounts.User, username: user_id))
+        {:ok, socket}
+      {:error, _} ->
+        {:ok, socket}
+    end
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
